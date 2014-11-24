@@ -1,0 +1,18 @@
+- name: Install latest docker binary
+  get_url:
+    url: https://get.docker.com/builds/Linux/x86_64/docker-latest
+    dest: /usr/bin/docker
+    mode: 0111
+
+- name: Install docker.service systemd unit file
+  get_url:
+    url: https://raw.githubusercontent.com/docker/docker/master/contrib/init/systemd/docker.service
+    dest: /usr/lib/systemd/system/docker.service
+
+- name: Install docker.socket systemd unit file
+  get_url:
+    url: https://raw.githubusercontent.com/docker/docker/master/contrib/init/systemd/docker.socket
+    dest: /usr/lib/systemd/system/docker.socket
+
+- name: Start docker
+  service: name=docker enabled=yes state=started

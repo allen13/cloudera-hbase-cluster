@@ -1,0 +1,6 @@
+- name: Setup all hosts with docker
+  hosts: all
+  gather_facts: false
+  sudo: true
+  roles:
+    - docker
