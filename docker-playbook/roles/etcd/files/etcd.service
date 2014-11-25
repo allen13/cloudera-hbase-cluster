@@ -1,0 +1,11 @@
+[Unit]
+Description=Etcd distributed key store
+
+[Service]
+EnvironmentFile=/etc/environment
+ExecStart=/usr/local/bin/etcd -name %H -peer-addr ${PRIVATE_IPV4}:7001 -addr ${PRIVATE_IPV4}:4001 -discovery $DISCOVERY_URL
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,28 @@
+- name: Download etcd archive
+  get_url:
+    url: https://github.com/coreos/etcd/releases/download/v0.4.6/etcd-v0.4.6-linux-amd64.tar.gz
+    dest: /tmp/etcd-v0.4.6-linux-amd64.tar.gz
+
+- name: Unarchive and install etcd
+  unarchive:
+    src: /tmp/etcd-v0.4.6-linux-amd64.tar.gz
+    dest: /opt/
+    copy: no
+
+- name: Symlink etcd to /usr/local/bin
+  file:
+    src: /opt/etcd-v0.4.6-linux-amd64/etcd
+    dest: /usr/local/bin/etcd
+    state: link
+
+- name: Symlink etcdctl to /usr/local/bin
+  file:
+    src: /opt/etcd-v0.4.6-linux-amd64/etcdctl
+    dest: /usr/local/bin/etcdctl
+    state: link
+
+- name: Install etcd service file
+  copy: src=etcd.service dest=/usr/lib/systemd/system/etcd.service
+
+- name: Start and register etcd service file
+  service: name=etcd enabled=yes state=restarted

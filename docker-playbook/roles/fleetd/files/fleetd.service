@@ -1,0 +1,13 @@
+[Unit]
+Description=Fleet cluster management
+After=etcd.service
+Requires=etcd.service
+
+[Service]
+EnvironmentFile=/etc/environment
+ExecStart=/usr/local/bin/fleetd
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target
