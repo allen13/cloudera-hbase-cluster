@@ -19,6 +19,13 @@ Install ansible on Ubuntu
     vagrant up
     bin/export_vagrant_ssh_keys
     ./provision
+    cd fleet
+    source fleet_environment
+    fleetctl list-machines
+    ./deploy_influxdb_cluster
+    fleetctl list-units
+    fleetctl status influxdb@01
+
 
 ####Destroying
 
