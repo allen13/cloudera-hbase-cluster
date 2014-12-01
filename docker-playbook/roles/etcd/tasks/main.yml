@@ -12,17 +12,17 @@
 - name: Symlink etcd to /usr/local/bin
   file:
     src: /opt/etcd-v0.4.6-linux-amd64/etcd
-    dest: /usr/local/bin/etcd
+    dest: /usr/bin/etcd
     state: link
 
 - name: Symlink etcdctl to /usr/local/bin
   file:
     src: /opt/etcd-v0.4.6-linux-amd64/etcdctl
-    dest: /usr/local/bin/etcdctl
+    dest: /usr/bin/etcdctl
     state: link
 
 - name: Install etcd service file
   copy: src=etcd.service dest=/usr/lib/systemd/system/etcd.service
 
 - name: Start and register etcd service file
-  service: name=etcd enabled=yes state=restarted
+  service: name=etcd enabled=yes state=started

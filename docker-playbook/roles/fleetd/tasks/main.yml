@@ -12,17 +12,20 @@
 - name: Symlink fleetd to /usr/local/bin
   file:
     src: /opt/fleet-v0.8.3-linux-amd64/fleetd
-    dest: /usr/local/bin/fleetd
+    dest: /usr/bin/fleetd
     state: link
 
 - name: Symlink fleetctl to /usr/local/bin
   file:
     src: /opt/fleet-v0.8.3-linux-amd64/fleetctl
-    dest: /usr/local/bin/fleetctl
+    dest: /usr/bin/fleetctl
     state: link
 
 - name: Install etcd service file
   copy: src=fleetd.service dest=/usr/lib/systemd/system/fleetd.service
 
 - name: Start and register fleetd service file
-  service: name=fleetd enabled=yes state=restarted
+  service: name=fleetd enabled=yes state=started
+
+- name: Setup core user for fleetctl
+  include: core_user.yml

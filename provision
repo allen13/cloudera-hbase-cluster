@@ -1,2 +1,11 @@
 # change the discovery url each time you destroy the cluster https://discovery.etcd.io/new
-ansible-playbook -i hosts docker-playbook/site.yml --extra-vars="discovery_url=https://discovery.etcd.io/733b09bf3b6e680fe56c45c276076f66"
+if [ -f "discovery_url" ]
+then
+  echo "Discovery url already exists"
+else
+  echo "Generating discovery url"
+  curl https://discovery.etcd.io/new > discovery_url
+fi
+
+DISCOVERY_URL=$(cat discovery_url)
+ansible-playbook -i hosts docker-playbook/site.yml --extra-vars="discovery_url=${DISCOVERY_URL}"

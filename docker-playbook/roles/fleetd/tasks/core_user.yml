@@ -1,0 +1,22 @@
+- name: fleetctl needs a core user to function
+  user: name=core comment="core user for fleetctl" group=root
+
+- name: Create core .ssh folder
+  file: path=/home/core/.ssh state=directory mode=0700 group=root owner=core
+
+- name: Add ssh private key to core user
+  copy: src=id_rsa dest=/home/core/.ssh/id_rsa mode=0600 group=root owner=core
+
+- name: Add ssh public key to core user
+  copy: src=id_rsa.pub dest=/home/core/.ssh/id_rsa.pub mode=0600 group=root owner=core
+
+- name: Add ssh public key to core user
+  copy: src=id_rsa.pub dest=/home/core/.ssh/authorized_keys mode=0600 group=root owner=core
+
+- name: Set SSH agent to be run automatically
+  copy: src=.bash_profile dest=/home/core/.bash_profile
+
+- name: Source bash_profile
+  lineinfile:
+    dest: /home/core/.bashrc
+    line: ". /home/core/.bash_profile"

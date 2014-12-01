@@ -1,0 +1,6 @@
+- name: Check if machine-id needs to be regenerated
+  copy: content="" dest=/etc/machine-id-is-unique force=no
+  register: machine_id_is_unique
+- name: Generate unique machine-id
+  shell: sudo rm /etc/machine-id  && sudo /bin/systemd-machine-id-setup
+  when: machine_id_is_unique.changed

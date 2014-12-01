@@ -1,0 +1,17 @@
+[Unit]
+Description=InfluxDB Service
+After=docker.service
+Requires=docker.service
+
+[Service]
+EnvironmentFile=/etc/environment
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill influxdb-%i
+ExecStartPre=-/usr/bin/docker rm influxdb-%i
+ExecStartPre=/usr/bin/docker pull allen13/influxdb-min
+
+ExecStart=/etc/influxdb/start_influxdb influxdb-%i
+ExecStop=/usr/bin/docker stop influxdb-%i
+
+[X-Fleet]
+Conflicts=influxdb*

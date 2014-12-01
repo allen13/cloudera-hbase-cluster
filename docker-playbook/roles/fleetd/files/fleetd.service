@@ -5,7 +5,7 @@ Requires=etcd.service
 
 [Service]
 EnvironmentFile=/etc/environment
-ExecStart=/usr/local/bin/fleetd
+ExecStart=/usr/bin/fleetd
 Restart=always
 RestartSec=10s
 

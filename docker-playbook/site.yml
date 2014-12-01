@@ -3,10 +3,9 @@
   gather_facts: false
   sudo: true
   roles:
+    - unique
     - environment
     - etcd
     - fleetd
     - docker
-  # tasks:
-  #   - name: Generate unique machine-id
-  #     shell: sudo rm /etc/machine-id  && sudo /bin/systemd-machine-id-setup
+    - influxdb

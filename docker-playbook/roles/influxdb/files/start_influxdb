@@ -1,0 +1,21 @@
+#!/bin/bash
+source /etc/environment
+master=$(/usr/bin/etcdctl get /influxdb/master)
+
+if [ -z "$master" ]
+then
+  /usr/bin/etcdctl set /influxdb/master ${PRIVATE_IPV4}
+else
+  seed="-e SEED=${master}:8090"
+fi
+
+echo $master
+echo $seed
+
+/usr/bin/docker run --rm \
+--name $1 \
+-v /data/influxdb/:/data/influxdb/ \
+-p 8083:8083 -p 8086:8086 -p 8090:8090 -p 8099:8099 \
+-e SERVICE_NAME=$1 \
+-e HOSTNAME="${PRIVATE_IPV4}" \
+${seed} allen13/influxdb-min
