@@ -6,6 +6,12 @@
     - unique
     - environment
     - etcd
-    - fleetd
     - docker
     - influxdb
+
+- name: Haproxy Nodes
+  hosts: haproxy
+  gather_facts: false
+  sudo: true
+  roles:
+    - haproxy

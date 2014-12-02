@@ -1,0 +1,5 @@
+- name: Install haproxy service file
+  copy: src=haproxy.service dest=/usr/lib/systemd/system/haproxy.service
+
+- name: Start Haproxy
+  service: name=haproxy enabled=yes state=started

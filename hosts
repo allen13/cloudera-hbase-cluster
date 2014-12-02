@@ -1,3 +1,6 @@
 node-01 ansible_ssh_host=172.17.8.101 ansible_ssh_user=vagrant
 node-02 ansible_ssh_host=172.17.8.102 ansible_ssh_user=vagrant
 node-03 ansible_ssh_host=172.17.8.103 ansible_ssh_user=vagrant
+
+[haproxy]
+node-01
