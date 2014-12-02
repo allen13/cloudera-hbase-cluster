@@ -1,4 +1,11 @@
 - name: Create fleet directory for unit files
   file: path=/etc/influxdb state=directory
+
 - name: Install influxdb_start script
   copy: src=start_influxdb dest=/etc/influxdb/start_influxdb mode=0755
+
+- name: Install influxdb fleet service file
+  copy: src=influxdb.service dest=/usr/lib/systemd/system/influxdb.service
+
+- name: Start InfluxDB
+  service: name=influxdb enabled=yes state=started
