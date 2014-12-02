@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # change the discovery url each time you destroy the cluster https://discovery.etcd.io/new
 if [ -f "discovery_url" ]
 then
@@ -8,4 +10,4 @@ else
 fi
 
 DISCOVERY_URL=$(cat discovery_url)
-ansible-playbook -i hosts docker-playbook/site.yml --extra-vars="discovery_url=${DISCOVERY_URL}"
+ansible-playbook -i hosts cluster-playbook/site.yml --extra-vars="discovery_url=${DISCOVERY_URL}"
