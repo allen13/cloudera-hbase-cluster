@@ -1,5 +1,0 @@
-#!/bin/bash
-
-fleetctl start influxdb@01
-fleetctl start influxdb@02
-fleetctl start influxdb@03

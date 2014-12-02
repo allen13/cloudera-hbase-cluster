@@ -1,4 +1,0 @@
-#!/bin/bash
-
-export FLEETCTL_TUNNEL=127.0.0.1:2222
-ssh-add ../cluster-playbook/roles/fleetd/files/insecure_id_rsa
