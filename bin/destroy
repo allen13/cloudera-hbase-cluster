@@ -1,2 +1,4 @@
+#!/bin/bash
+
 vagrant destroy --force
 rm discovery_url
