@@ -1,5 +1,5 @@
 [Unit]
-Description=InfluxDB Service
+Description=HAProxy load balancer
 After=docker.service
 Requires=docker.service
 
@@ -7,14 +7,14 @@ Requires=docker.service
 EnvironmentFile=/etc/environment
 TimeoutStartSec=0
 Restart=always
-RestartSec=10s
 
 ExecStartPre=-/usr/bin/docker kill haproxy
 ExecStartPre=-/usr/bin/docker rm haproxy
 ExecStartPre=/usr/bin/docker pull dockerfile/haproxy
 
 ExecStart=/usr/bin/docker run -rm \
--p 80:80 \
+-p 8085:8085 \
+-v /etc/haproxy:/haproxy-override \
 --name haproxy \
 dockerfile/haproxy
 

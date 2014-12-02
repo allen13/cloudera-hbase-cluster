@@ -1,0 +1,7 @@
+[template]
+src = "haproxy.cfg.tmpl"
+dest = "/etc/haproxy/haproxy.cfg"
+keys = [
+  "/influxdb/servers",
+]
+reload_cmd = "/usr/bin/systemctl restart haproxy"

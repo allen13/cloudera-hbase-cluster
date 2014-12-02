@@ -7,7 +7,7 @@ Requires=docker.service
 EnvironmentFile=/etc/environment
 TimeoutStartSec=0
 Restart=always
-RestartSec=10s
+RestartSec=5s
 
 ExecStartPre=-/usr/bin/docker kill influxdb
 ExecStartPre=-/usr/bin/docker rm influxdb
@@ -15,7 +15,11 @@ ExecStartPre=/usr/bin/docker pull allen13/influxdb-min
 
 ExecStart=/etc/influxdb/start_influxdb influxdb
 
+ExecStartPost=/usr/bin/etcdctl set /influxdb/servers/%H ${PRIVATE_IPV4}:8086
+
 ExecStop=/usr/bin/docker stop influxdb
+
+ExecStopPost=/usr/bin/etcdctl rm /influxdb/servers/%H
 
 [Install]
 WantedBy=multi-user.target

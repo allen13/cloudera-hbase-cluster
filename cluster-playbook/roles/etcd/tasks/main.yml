@@ -9,7 +9,7 @@
     dest: /opt/
     copy: no
 
-- name: Symlink etcd to /usr/local/bin
+- name: Symlink etcd to /usr/bin
   file:
     src: /opt/etcd-v0.4.6-linux-amd64/etcd
     dest: /usr/bin/etcd

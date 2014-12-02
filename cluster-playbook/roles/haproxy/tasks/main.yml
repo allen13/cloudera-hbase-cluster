@@ -1,5 +1,14 @@
 - name: Install haproxy service file
   copy: src=haproxy.service dest=/usr/lib/systemd/system/haproxy.service
 
+- name: Create /etc/haproxy directory
+  file: path=/etc/haproxy state=directory
+
+- name: Install haproxy confd config
+  copy: src=haproxy.toml dest=/etc/confd/conf.d/haproxy.toml
+
+- name: Install haproxy confd template
+  copy: src=haproxy.cfg.tmpl dest=/etc/confd/templates/haproxy.cfg.tmpl
+
 - name: Start Haproxy
-  service: name=haproxy enabled=yes state=started
+  service: name=haproxy enabled=yes state=restarted
