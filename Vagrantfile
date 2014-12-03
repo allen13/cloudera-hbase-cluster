@@ -17,7 +17,7 @@ def create_vm(vm_number, config)
 
     config.vm.provider :virtualbox do |vb|
       vb.gui = false
-      vb.memory = 1024
+      vb.memory = 2048
       vb.cpus = 1
     end
 
