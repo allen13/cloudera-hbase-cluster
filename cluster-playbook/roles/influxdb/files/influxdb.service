@@ -2,6 +2,8 @@
 Description=InfluxDB Service
 After=docker.service
 Requires=docker.service
+After=etcd.service
+Requires=etcd.service
 
 [Service]
 EnvironmentFile=/etc/environment
