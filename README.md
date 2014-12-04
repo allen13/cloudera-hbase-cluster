@@ -13,20 +13,26 @@ Install ansible on Ubuntu
     $ sudo apt-add-repository ppa:ansible/ansible
     $ sudo apt-get update
     $ sudo apt-get install ansible
+	
+Install ansible on Mac
+
+    $ brew install ansible
 
 ####Running
 
     vagrant up
     bin/export_vagrant_ssh_keys
-    ./provision
-    cd fleet
-    source fleet_environment
-    fleetctl list-machines
-    ./deploy_influxdb_cluster
-    fleetctl list-units
-    fleetctl status influxdb@01
+    bin/provision
 
 
 ####Destroying
 
-    ./destroy
+    bin/destroy
+	
+####InfluxDB
+
+After the server is provision you can browse to the influxdb web interface at each node
+
+* http://172.17.8.101:8083
+* http://172.17.8.102:8083
+* http://172.17.8.103:8083
