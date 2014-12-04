@@ -15,9 +15,6 @@ func main() {
 	flag.Parse()
 
 	loadTest := NewLoadTest(*host, "server_metrics")
-	//	for i := 1; i <= *points; i++ {
-	//		loadTest.writeDataPoint(i)
-	//	}
 	loadTest.pageQueries(*points, *threads)
 }
 
