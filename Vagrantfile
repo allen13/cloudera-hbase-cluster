@@ -1,10 +1,12 @@
 require 'fileutils'
 require 'open-uri'
 
+NODES = 4
+
 Vagrant.configure("2") do |config|
   config.vm.box = "chef/centos-7.0"
 
-  (1..3).each do |vm_number|
+  (1..NODES).each do |vm_number|
     create_vm(vm_number, config)
   end
 end
