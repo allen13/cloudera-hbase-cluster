@@ -1,4 +1,4 @@
-- name: Setup all hosts with docker
+- name: Setup all hosts with etcd
   hosts: all
   gather_facts: false
   sudo: true
@@ -6,9 +6,17 @@
     - unique
     - environment
     - etcd
+
+- name: Influxdb Nodes
+  hosts: influxdb
+  gather_facts: false
+  sudo: true
+  roles:
+    - confd
+    - haproxy
     - docker
     - influxdb
-
+	
 - name: Haproxy Nodes
   hosts: haproxy
   gather_facts: false
