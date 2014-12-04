@@ -1,6 +1,6 @@
 - name: Install confd
-  get_url:
-    url: https://github.com/kelseyhightower/confd/releases/download/v0.6.3/confd-0.6.3-linux-amd64
+  copy:
+    src: confd-0.6.3-linux-amd64
     dest: /usr/bin/confd
 
 - name: Make confd executable

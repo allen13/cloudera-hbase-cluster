@@ -12,11 +12,9 @@
   gather_facts: false
   sudo: true
   roles:
-    - confd
-    - haproxy
     - docker
     - influxdb
-	
+
 - name: Haproxy Nodes
   hosts: haproxy
   gather_facts: false

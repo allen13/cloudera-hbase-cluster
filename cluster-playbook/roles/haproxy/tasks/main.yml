@@ -4,9 +4,6 @@
 - name: Install haproxy service file
   copy: src=haproxy.service dest=/usr/lib/systemd/system/haproxy.service
 
-- name: Create /etc/haproxy directory
-  file: path=/etc/haproxy state=directory
-
 - name: Install haproxy confd config
   copy: src=haproxy.toml dest=/etc/confd/conf.d/haproxy.toml
   register: haproxy_config

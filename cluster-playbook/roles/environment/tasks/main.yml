@@ -12,3 +12,13 @@
   lineinfile:
     dest: /etc/environment
     line: "FLEET_PUBLIC_IP={{ansible_ssh_host}}"
+
+- name: Increase hard ulimit for influxdb
+  lineinfile:
+    dest: /etc/security/limits.conf
+    line: "*             hard    nofile          65536"
+
+- name: Increase soft ulimit for influxdb
+  lineinfile:
+    dest: /etc/security/limits.conf
+    line: "*             soft    nofile          65536"

@@ -1,13 +1,7 @@
-- name: Download etcd archive
-  get_url:
-    url: https://github.com/coreos/etcd/releases/download/v0.4.6/etcd-v0.4.6-linux-amd64.tar.gz
-    dest: /tmp/etcd-v0.4.6-linux-amd64.tar.gz
-
 - name: Unarchive and install etcd
   unarchive:
-    src: /tmp/etcd-v0.4.6-linux-amd64.tar.gz
+    src: etcd-v0.4.6-linux-amd64.tar.gz
     dest: /opt/
-    copy: no
 
 - name: Symlink etcd to /usr/bin
   file:
