@@ -5,64 +5,109 @@ import (
 	"fmt"
 	"github.com/influxdb/influxdb/client"
 	"math/rand"
+	"runtime"
 	"sync"
+	"net/http"
+	"net"
+	"time"
+	"crypto/tls"
 )
+
+type LoadTest struct {
+	host        string
+	database    string
+	points      int
+	connections int
+	writes      chan *LoadWrite
+	sync.WaitGroup
+}
+
+type LoadWrite struct {
+	Series []*client.Series
+}
 
 func main() {
 	host := flag.String("host", "127.0.0.1:8086", "host:port to connect to")
 	points := flag.Int("points", 1, "total data points to write to server")
-	threads := flag.Int("threads", 1, "number of threads to use for execution")
+	connections := flag.Int("connections", 1, "number of threads to use for execution")
 	flag.Parse()
 
-	loadTest := NewLoadTest(*host, "server_metrics")
-	loadTest.pageQueries(*points, *threads)
+	runtime.GOMAXPROCS(runtime.NumCPU())
+
+	loadTest := &LoadTest{
+		host:        *host,
+		database:    "server_metrics",
+		points:      *points,
+		connections: *connections,
+		writes:      make(chan *LoadWrite)}
+
+	loadTest.Start()
+
 }
 
-type LoadTest struct {
-	client *client.Client
+func (self *LoadTest) Start() {
+	self.Add(self.points)
+	self.startPostWorkers()
+	self.writeDataPoints()
+	self.Wait()
 }
 
-func NewLoadTest(host string, database string) *LoadTest {
-	loadTest := new(LoadTest)
+func (self *LoadTest) startPostWorkers() {
+	for i := 0; i < self.connections; i++ {
+		go self.handleWrites()
+	}
+}
 
-	loadTest.client, _ = client.NewClient(&client.ClientConfig{
-		Host:     host,
+func (self *LoadTest) handleWrites() {
+
+	influxdbClient := self.newClient()
+
+	for {
+		write := <-self.writes
+
+		err := influxdbClient.WriteSeries(write.Series)
+		self.Done()
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+}
+
+func (self *LoadTest) newClient() *client.Client {
+	newClient, err := client.New(&client.ClientConfig{
+		Host:     self.host,
+		Database: self.database,
 		Username: "root",
 		Password: "root",
-		Database: database,
+		HttpClient: NewHttpClient(),
 	})
-
-	return loadTest
-}
-func (self *LoadTest) pageQueries(queries int, threadCount int) {
-	var waitGroup sync.WaitGroup
-	pageSize := queries / threadCount
-
-	for thread := 0; thread < threadCount; thread++ {
-		waitGroup.Add(1)
-		go self.runPage(thread,pageSize, &waitGroup)
+	if err != nil {
+		panic(fmt.Sprintf("Error connecting to server \"%s\": %s", self.host, err))
 	}
-
-	waitGroup.Wait()
+	return newClient
 }
 
-func (self *LoadTest) runPage(thread int, pageSize int, waitGroup *sync.WaitGroup) {
-	for threadQuery := 1; threadQuery <= pageSize; threadQuery++ {
-		pageStart := thread * pageSize
-		queryId := pageStart + threadQuery
-		self.writeDataPoint(queryId)
+func NewHttpClient() *http.Client {
+	timeout := 10 * time.Second
+	return &http.Client{
+		Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+			ResponseHeaderTimeout: timeout,
+			Dial: func(network, address string) (net.Conn, error) {
+				return net.DialTimeout(network, address, timeout)
+			},
+		},
 	}
-	waitGroup.Done()
+}
+
+func (self *LoadTest) writeDataPoints() {
+	for i := 1; i <= self.points; i++ {
+		self.writeDataPoint(i)
+	}
 }
 
 func (self *LoadTest) writeDataPoint(trackingObjectId int) {
 	random_public_out := rand.Intn(100)
-	err := self.client.WriteSeries(dataPoint(trackingObjectId, random_public_out))
-	if err != nil {
-		fmt.Println("Write failed.")
-		panic(err)
-	}
-	fmt.Println("wrote trackingObjectId: ", trackingObjectId)
+	self.writes <- &LoadWrite{Series: dataPoint(trackingObjectId, random_public_out)}
 }
 
 func dataPoint(trackingObjectId int, public_out int) []*client.Series {
