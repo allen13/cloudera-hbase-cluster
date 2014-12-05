@@ -13,7 +13,7 @@ Install ansible on Ubuntu
     $ sudo apt-add-repository ppa:ansible/ansible
     $ sudo apt-get update
     $ sudo apt-get install ansible
-	
+
 Install ansible on Mac
 
     $ brew install ansible
@@ -28,7 +28,7 @@ Install ansible on Mac
 ####Destroying
 
     bin/destroy
-	
+
 ####InfluxDB
 
 After the server is provision you can browse to the influxdb web interface at each node
@@ -36,3 +36,8 @@ After the server is provision you can browse to the influxdb web interface at ea
 * http://172.17.8.101:8083
 * http://172.17.8.102:8083
 * http://172.17.8.103:8083
+
+####HAProxy for InfluxDb
+
+* http://172.17.8.104:8086
+* HAProxy stats page http://172.17.8.104:8086/haproxy?stats
