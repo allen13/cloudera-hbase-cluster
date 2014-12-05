@@ -1,0 +1,6 @@
+[Unit]
+Description=Load test Influxdb
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/load-test-influxdb

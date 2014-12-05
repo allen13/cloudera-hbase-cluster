@@ -1,0 +1,9 @@
+[Unit]
+Description=Load test InfluxDB every 5 minutes
+
+[Timer]
+OnUnitActiveSec=2min
+Persistent=true
+
+[Install]
+WantedBy=timers.target
