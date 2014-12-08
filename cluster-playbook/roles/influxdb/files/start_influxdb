@@ -1,16 +1,13 @@
 #!/bin/bash
 source /etc/environment
-master=$(/usr/bin/etcdctl get /influxdb/master)
 
-if [ -z "$master" ]
+curl -L http://127.0.0.1:4001/v2/keys/influxdb/master?prevExist=false -XPUT -d value=${PRIVATE_IPV4}
+master=$(/usr/bin/etcdctl get /influxdb/master -consistent)
+
+if [ "$master" != "$PRIVATE_IPV4" ];
 then
-  /usr/bin/etcdctl set /influxdb/master ${PRIVATE_IPV4}
-else
   seed="-e SEED=${master}:8090"
 fi
-
-echo $master
-echo $seed
 
 /usr/bin/docker run --rm \
 --name $1 \
