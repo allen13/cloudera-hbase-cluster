@@ -2,8 +2,9 @@
 Description=Load test InfluxDB every 5 minutes
 
 [Timer]
-OnUnitActiveSec=2min
-Persistent=true
+OnBootSec=1sec
+OnUnitActiveSec=5sec
+Unit=influxdb-load-test.service
 
 [Install]
 WantedBy=timers.target

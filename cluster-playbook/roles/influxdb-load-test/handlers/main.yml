@@ -1,0 +1,2 @@
+- name: create influxdb server_metrics database
+  service: name=create-influxdb-database state=started

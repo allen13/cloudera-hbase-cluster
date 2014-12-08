@@ -1,8 +1,18 @@
 - name: Install influxdb load test app
   copy: src=load_test_influxdb dest=/usr/local/bin/load_test_influxdb mode=0111
 
+- name: Install create influxdb database app
+  copy: src=create_influxdb_database dest=/usr/local/bin/create_influxdb_database mode=0111
+
+- name: Create influxdb database
+  copy: src=create-influxdb-database.service dest=/usr/lib/systemd/system/create-influxdb-database.service
+  notify: create influxdb server_metrics database
+
 - name: Install influxdb-load-test service file
   copy: src=influxdb-load-test.service dest=/usr/lib/systemd/system/influxdb-load-test.service
 
 - name: Install influxdb-load-test timer file
-  copy: src=influxdb-load-test.service dest=/usr/lib/systemd/system/influxdb-load-test.timer
+  copy: src=influxdb-load-test.timer dest=/usr/lib/systemd/system/influxdb-load-test.timer
+
+- name: Start influxdb-load-test
+  service: name=influxdb-load-test.timer enabled=yes state=started

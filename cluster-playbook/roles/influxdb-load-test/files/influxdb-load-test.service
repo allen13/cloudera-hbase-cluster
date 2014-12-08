@@ -3,4 +3,4 @@ Description=Load test Influxdb
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/bin/load-test-influxdb
+ExecStart=/usr/local/bin/load_test_influxdb -points 1250 -connections 100

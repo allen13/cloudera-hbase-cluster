@@ -1,0 +1,6 @@
+[Unit]
+Description=Create server_metrics database for influxdb load testing
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/create_influxdb_database -host ${PRIVATE_IPV4}:8086 -split=3
