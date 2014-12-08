@@ -22,3 +22,4 @@
   roles:
     - confd
     - haproxy
+    - influxdb-load-test

@@ -1,0 +1,8 @@
+- name: Install influxdb load test app
+  copy: src=load_test_influxdb dest=/usr/local/bin/load_test_influxdb mode=0111
+
+- name: Install influxdb-load-test service file
+  copy: src=influxdb-load-test.service dest=/usr/lib/systemd/system/influxdb-load-test.service
+
+- name: Install influxdb-load-test timer file
+  copy: src=influxdb-load-test.service dest=/usr/lib/systemd/system/influxdb-load-test.timer
