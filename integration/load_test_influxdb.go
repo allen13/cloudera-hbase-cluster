@@ -57,6 +57,7 @@ func (self *LoadTest) startDataPointWriters() {
 }
 
 func (self *LoadTest) submitDataPoints() {
+	rand.Seed( time.Now().UTC().UnixNano())
 	for i := 1; i <= self.points; i++ {
 		self.seriesStore <- dataPoint(i)
 	}
@@ -181,5 +182,3 @@ func dataPoint(trackingObjectId int) *client.Series {
 		},
 	}
 }
-
-
