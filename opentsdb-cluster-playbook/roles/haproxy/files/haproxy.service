@@ -1,0 +1,19 @@
+[Unit]
+Description=HAProxy load balancer
+Requires=confd.service
+After=confd.service
+
+[Service]
+EnvironmentFile=/etc/environment
+TimeoutStartSec=0
+Restart=always
+
+
+ExecStart=/usr/sbin/haproxy -f /etc/haproxy/haproxy.cfg
+
+ExecStartPost=/usr/bin/etcdctl set /influxdb/proxy ${PRIVATE_IPV4}
+
+ExecStopPost=/usr/bin/etcdctl rm /influxdb/proxy
+
+[Install]
+WantedBy=multi-user.target

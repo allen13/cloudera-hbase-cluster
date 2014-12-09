@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# change the discovery url each time you destroy the cluster https://discovery.etcd.io/new
+if [ -f "production_discovery_url" ]
+then
+  echo "Discovery url already exists"
+else
+  echo "Generating discovery url"
+  curl https://discovery.etcd.io/new > production_discovery_url
+fi
+
+DISCOVERY_URL=$(cat production_discovery_url)
+ansible-playbook -i production cluster-playbook/site.yml --extra-vars="discovery_url=${DISCOVERY_URL}"

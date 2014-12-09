@@ -1,4 +1,4 @@
-centos-cluster
+opentsdb-cluster
 =======================
 
 Provisioned centos cluster that supports docker and friends
@@ -28,16 +28,3 @@ Install ansible on Mac
 ####Destroying
 
     bin/destroy
-
-####InfluxDB
-
-After the server is provision you can browse to the influxdb web interface at each node
-
-* http://172.17.8.101:8083
-* http://172.17.8.102:8083
-* http://172.17.8.103:8083
-
-####HAProxy for InfluxDb
-
-* http://172.17.8.104:8086
-* HAProxy stats page http://172.17.8.104:8086/haproxy?stats

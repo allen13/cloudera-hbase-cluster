@@ -1,7 +1,7 @@
 require 'fileutils'
 require 'open-uri'
 
-NODES = 4
+NODES = 1
 
 Vagrant.configure("2") do |config|
   config.vm.box = "chef/centos-7.0"
@@ -19,7 +19,7 @@ def create_vm(vm_number, config)
 
     config.vm.provider :virtualbox do |vb|
       vb.gui = false
-      vb.memory = 2048
+      vb.memory = 1024
       vb.cpus = 1
     end
 
