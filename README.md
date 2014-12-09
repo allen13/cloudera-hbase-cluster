@@ -1,7 +1,7 @@
 opentsdb-cluster
 =======================
 
-Provisioned centos cluster that supports docker and friends
+Provisioned opentsdb cluster
 
 ####Setup
 
