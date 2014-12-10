@@ -1,0 +1,17 @@
+- name: add cloudera repo key
+  apt_key: url=http://archive.cloudera.com/cm5/ubuntu/precise/amd64/cm/archive.key
+
+- name: install cloudera repo
+  apt_repository:
+    repo: deb [arch=amd64] http://archive.cloudera.com/cm5/ubuntu/precise/amd64/cm precise-cm5 contrib
+    state: present
+
+- name: cloudera reccommends setting vm.swappiness to 0 so it only uses swap as a last resort
+  sysctl: name=vm.swappiness value=0 state=present
+
+- name: install cloudera common dependencies
+  apt: name={{ item }} state=present
+  with_items:
+    - ntp
+    - oracle-j2sdk1.7
+    - cloudera-manager-daemons

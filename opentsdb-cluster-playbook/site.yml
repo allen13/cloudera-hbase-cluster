@@ -1,5 +1,21 @@
-- name: Setup OpenTSDB cluster
-  hosts: all
+- name: cloudera servers
+  hosts: cloudera
   gather_facts: false
   sudo: true
   roles:
+    - shared-host-file
+    - cloudera-common
+
+- name: setup cloudera manager host
+  hosts: cloudera-manager-master
+  gather_facts: false
+  sudo: true
+  roles:
+    - cloudera-manager-master
+
+- name: setup cloudera agent hosts
+  hosts: cloudera-manager-agent
+  gather_facts: false
+  sudo: true
+  roles:
+    - cloudera-manager-agent

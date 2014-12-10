@@ -10,4 +10,4 @@ else
 fi
 
 DISCOVERY_URL=$(cat discovery_url)
-ansible-playbook -i hosts cluster-playbook/site.yml --extra-vars="discovery_url=${DISCOVERY_URL}"
+ansible-playbook -i hosts opentsdb-cluster-playbook/site.yml --extra-vars="discovery_url=${DISCOVERY_URL}"

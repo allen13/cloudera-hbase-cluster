@@ -1,1 +1,12 @@
-node-01 ansible_ssh_host=172.17.8.101 ansible_ssh_user=vagrant
+[cloudera]
+hbase-01 ansible_ssh_host=172.17.8.101 ansible_ssh_user=vagrant
+hbase-02 ansible_ssh_host=172.17.8.102 ansible_ssh_user=vagrant
+hbase-03 ansible_ssh_host=172.17.8.103 ansible_ssh_user=vagrant
+
+[cloudera-manager-master]
+hbase-01
+
+[cloudera-manager-agent]
+hbase-01
+hbase-02
+hbase-03

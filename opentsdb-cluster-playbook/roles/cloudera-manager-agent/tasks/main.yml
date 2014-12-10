@@ -1,0 +1,10 @@
+- name: install cloudera manager agent
+  apt: name=cloudera-manager-agent state=present
+
+- name: setup agent config
+  copy:
+    src: cloudera-scm-agent-config.ini
+    dest: /etc/cloudera-scm-agent/config.ini
+
+- name: start cloudera services
+  service: name=cloudera-scm-agent state=started enabled=yes
