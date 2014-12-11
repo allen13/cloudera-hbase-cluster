@@ -18,7 +18,7 @@ Install ansible on Mac
 
     $ brew install ansible
 
-####Running
+####Running in vagrant
 
     vagrant up
     bin/export_vagrant_ssh_keys
@@ -28,3 +28,9 @@ Install ansible on Mac
 ####Destroying
 
     bin/destroy
+
+####Running in production
+
+Before running in production the hosts file will need to be copied to a file named production and then modified to fit your server. Afterwards you can run the production provisioning script.
+
+    bin/provision_production
